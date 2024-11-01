@@ -1,0 +1,190 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 22.04.0 ] */
+/* [wxMaxima: comment start ]
+In my experiments, this is needed for the limit of conjugate(z)/z to behave correctly
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+declare([t,z],[real,complex]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+f:z^2*sin(1/z);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+limit(f,z,0);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+But notice that we get different values of the limit along the real and imaginary axes:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+limit(subst(z=t,f),t,0);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+limit(subst(z=%i*t,f),t,0);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Similar story for the well-known "not-limit" with conjugate of z
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+limit(subst(z=t,conjugate(z)/z),t,0);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+limit(subst(z=%i*t,conjugate(z)/z),t,0);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+is(equal(limit(subst(z=t,h),t,0),limit(subst(z=%i*t,h),t,0)));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+For a limit we know exists, notice we do get the same value along the real and imaginary axes
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+u:sin(z)/z;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+limit(subst(z=t,u),t,0);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+limit(subst(z=%i*t,u),t,0);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Here's another limit we know...it should be infinity from both directions
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+v:1/(z-%i);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+limit(subst(z=%i+t,v),t,0);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+limit(subst(z=%i+%i*t,v),t,0);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+So here's a little safer algorithm for complex limits....
+  of course I don't have a theorem that says checking these particular 
+paths is sufficient, but it helps for the examples we've been looking at :-?
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+limitC(_f,_z,_a):=block(
+[t,rlim,ilim,localz],
+    localz:_z,
+    declare([t,localz],[real,complex]), /* I don't know that duplicating _z is needed, but...*/
+    rlim:limit(subst(_z=_a+t,_f),t,0),
+    ilim:limit(subst(_z=_a+%i*t,_f),t,0),
+    if is(equal(rlim,ilim)) then return(rlim)
+    else return("und")
+)$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+limitC(1/z,z,0);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+limitC(1/(z-2),z,2);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+limitC(sin(z)/z,z,0);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+limitC(z^2*sin(1/z),z,0);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+limitC(conjugate(z)/z,z,0);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Notice there is a little hassle with +/- infinity for even powers...
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+limitC(abs(1/(z-1)^2),z,1);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+limit(subst(z=1+t,1/(z-1)^2),t,0);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+limit(subst(z=1+%i*t,1/(z-1)^2),t,0);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+limit(subst(z=1+t,abs(1/(z-1)^2)),t,0);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+limit(subst(z=1+%i*t,abs(1/(z-1)^2)),t,0);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+limit(abs(subst(z=1+t,(1/(z-1)^2))),t,0);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+limit(abs(subst(z=1+%i*t,(1/(z-1)^2))),t,0);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+limitC(1/(z-1)^3,z,1);
+/* [wxMaxima: input   end   ] */
+
+
+
+/* Old versions of Maxima abort on loading files that end in a comment. */
+"Created with wxMaxima 22.04.0"$
