@@ -1,0 +1,164 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 22.04.0 ] */
+/* [wxMaxima: input   start ] */
+load("C:/Users/barth/Documents/Maxima/residue_modified.mac")$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+The example that led us to examine alternatives to built-in residue()
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+f(z):=1/(z^7+1);a:exp(%i*%pi/7);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+limit((z-a)*f(z),z,a);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+residue_m(f(z),z,a);residue(f(z),z,a);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+The canonical essential singularity :-)
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+f(z):=sin(1/z);a:0;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+residue_taylor(f(z),z,a);residue(f(z),z,a);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+A deceptively simple pole
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+f(z):=1/sin(z);a=2*%pi;
+residue_m(f(z),z,a);residue(f(z),z,a);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+The simplest geometric series 
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+f(z):=1/(z-1);a:1;residue_m(f(z),z,a);residue(f(z),z,a);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+f(z):=cos(z)/(z-1)^2/(z+4);
+a:-4;residue_m(f(z),z,a);residue(f(z),z,a);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+A product of functions with an essential singularity...
+Residue_taylor misses this one
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+s:taylor(cos(z),z,0,10);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ss:subst(z=1/z,s);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+coeff(expand(z*ss),z,-1);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+f(z):=z*cos(1/z);a:0;residue_taylor(f(z),z,a);residue(f(z),z,a);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+another product 
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+s:taylor(sin(z),z,0,10);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ss:subst(z=1/z,s);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+sss:taylor(cos(z),z,0,10);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+coeff(expand(sss*ss),z,-1);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+float(%);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+f(z):=sin(z)*cos(1/z);a:0;
+residue_taylor(f(z),z,a);residue(f(z),z,a);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+A product that gives residue_taylor some trouble:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+s:taylor(z^2,z,0,10);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ss=subst(w=1/z,taylor(sin(w),w,0,10));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+expand(s*ss);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+coeff(expand(s*ss),z,-1);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+residue_taylor(z^2*sin(1/z),z,0);
+/* [wxMaxima: input   end   ] */
+
+
+
+/* Old versions of Maxima abort on loading files that end in a comment. */
+"Created with wxMaxima 22.04.0"$

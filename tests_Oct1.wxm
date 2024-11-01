@@ -1,0 +1,56 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 22.04.0 ] */
+/* [wxMaxima: comment start ]
+0.9
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: comment start ]
+exp(z)*exp(1/z) is represented by exp(z+1/z) in Maxima so when we call  
+residue_taylor(), it will be handled by residue_taylor_one_term(), with 
+argument z+1/z, which is of form that can't be handled by our substitution 
+method.I haven't figured out how to deal with this.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+f: exp(z)*exp(1/z);
+operator: op(f); /* we want the operator to be *, not ^ */
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+0.10
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: comment start ]
+I think your residue_taylorproduct() function is great! I guess now 
+the question is, how we can tell when the built-in taylor product 
+truncates the number of terms...or shall we give up the built_in 
+function altogether and switch to our own function (at the sacrifice 
+of running time, and maybe other unforeseeable problems)? 
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: comment start ]
+0.11
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: comment start ]
+I think the problem for this one lies in expand(). If I extract the 
+coefficent without expanding the product, residue_taylor() actually 
+gives the correct result...I really don't know why.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+load("D:/文件/Kalamazoo College/2016 SUMMER/maxima/sandbox/residue_modified.mac")$
+residue_taylor(z^2*sin(1/(z-1)),z, 1);
+/* [wxMaxima: input   end   ] */
+
+
+
+/* Old versions of Maxima abort on loading files that end in a comment. */
+"Created with wxMaxima 22.04.0"$

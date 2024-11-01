@@ -1,0 +1,42 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 22.04.0 ] */
+/* [wxMaxima: input   start ] */
+load("D:/文件/Kalamazoo College/2016 SUMMER/maxima/sandbox/residue_modified.mac")$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+First example with product of functions with an essential singularity, 
+where f(z) = z*cos(1/z)
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+f: z*cos(1/z); a:0; residue_taylor(f, z, a);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Second example where you actually computed the residue of sin(1/z)*cos(z)
+instead of sin(z)*cos(1/z)
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+f: cos(z)*sin(1/z); a:0; residue_taylor(f, z, a);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Last example where f(z) = z^2*sin(1/z)
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+f: z^2*sin(1/z); a:0; residue_taylor(f, z, a);
+/* [wxMaxima: input   end   ] */
+
+
+
+/* Old versions of Maxima abort on loading files that end in a comment. */
+"Created with wxMaxima 22.04.0"$
